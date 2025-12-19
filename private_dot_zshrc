@@ -1,0 +1,114 @@
+export PATH=$HOME/bin/${OSTYPE}:$HOME/bin:$HOME/.local/bin:/local/bin/X11:/local/bin:/bin:/usr/bin
+
+
+# Interactive shell prompt.
+PS1='\h:\w\n\$ '
+
+# set useful variables. EDITOR is your default line editor, VISUAL is
+# the default visual (full-screen) editor. Other good choices for VISUAL
+# could be /usr/bin/jove or /usr/bin/emacs.
+export EDITOR=$HOME/bin/nvim
+export VISUAL=$HOME/bin/nvim
+
+# make it harder to wipe out files
+set -o noclobber
+
+# checks for mail every five minutes
+MAIL=/var/spool/mail/$USER
+MAILCHECK=300
+
+# some aliases to force an "are you sure?" if action might result in data loss.
+# REAL MEN not afraid of data loss
+# alias rm='rm -i'
+# alias cp='cp -i'
+# alias mv='mv -i'
+
+# alias to allow use of "p" as a pager. Eg. "ls /local/bin | p"
+alias p='more -s -d'
+
+umask 077
+
+# Change the window title of X terminals 
+case $TERM in
+        xterm*|rxvt|eterm)
+                PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
+                ;;
+        screen)
+                PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
+                ;;
+esac
+
+
+# user defined stuff
+#
+# default terminal to xterm-256color (mainly for ghostty to work with tmux remotely)
+TERM=xterm-256color
+stty sane
+
+# car-go brr
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# copied from remote machine
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=500
+bindkey -e
+# End of lines configured by zsh-newuser-install
+#
+# The following lines were added by compinstall
+zstyle :compinstall filename "$HOME/.zshrc"
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# vi mode
+bindkey -v
+
+# alias for git
+alias ga="git add"
+alias gs="git status"
+alias gS="git switch"
+alias gb="git branch"
+alias gc="git commit"
+alias gd="git diff"
+alias gl="git log"
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+zstyle ':vcs_info:git:*' formats "%b "
+setopt PROMPT_SUBST
+
+function activate() {
+    local dir=${1:-.venv}
+    source $dir/bin/activate
+}
+
+NEWLINE=$'\n'
+# PROMPT="%F{green}%*%f %F{blue}%~%f %F{red}${vcs_info_msg_0_}%f${NEWLINE}$ "
+function setup_prompt() {
+    local USERNAME_FMT="%F{blue}%n%f" # name
+    local HOSTNAME_FMT="%F{magenta}@%m%f" # machine
+    local CWD_FMT="%F{yellow}%~%f"
+    PROMPT="${USERNAME_FMT}${HOSTNAME_FMT}: ${CWD_FMT} %F{red}${vcs_info_msg_0_}%f${NEWLINE}$ "
+}
+
+setup_prompt
+
+ZSH_THEME='iosevka'
+
+# expand aliases
+function expand-alias() {
+    zle _expand_alias
+    zle self-insert
+}
+
+zle -N expand-alias
+
+bindkey -M viins " " expand-alias
+
+eval "$(zoxide init zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
