@@ -1,46 +1,9 @@
-export PATH=$HOME/bin/${OSTYPE}:$HOME/bin:$HOME/.local/bin:/local/bin/X11:/local/bin:/bin:/usr/bin
-
-
-# Interactive shell prompt.
-PS1='\h:\w\n\$ '
-
-# set useful variables. EDITOR is your default line editor, VISUAL is
-# the default visual (full-screen) editor. Other good choices for VISUAL
-# could be /usr/bin/jove or /usr/bin/emacs.
-export EDITOR=$HOME/bin/nvim
-export VISUAL=$HOME/bin/nvim
+export EDITOR=$(which nvim)
+export VISUAL=$(which nvim)
 
 # make it harder to wipe out files
 set -o noclobber
 
-# checks for mail every five minutes
-MAIL=/var/spool/mail/$USER
-MAILCHECK=300
-
-# some aliases to force an "are you sure?" if action might result in data loss.
-# REAL MEN not afraid of data loss
-# alias rm='rm -i'
-# alias cp='cp -i'
-# alias mv='mv -i'
-
-# alias to allow use of "p" as a pager. Eg. "ls /local/bin | p"
-alias p='more -s -d'
-
-umask 077
-
-# Change the window title of X terminals 
-case $TERM in
-        xterm*|rxvt|eterm)
-                PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-                ;;
-        screen)
-                PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
-                ;;
-esac
-
-
-# user defined stuff
-#
 # default terminal to xterm-256color (mainly for ghostty to work with tmux remotely)
 TERM=xterm-256color
 stty sane
@@ -48,7 +11,6 @@ stty sane
 # car-go brr
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# copied from remote machine
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
