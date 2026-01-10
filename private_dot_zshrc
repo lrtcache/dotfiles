@@ -15,7 +15,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=500
-bindkey -e
 # End of lines configured by zsh-newuser-install
 #
 # The following lines were added by compinstall
@@ -74,3 +73,16 @@ bindkey -M viins " " expand-alias
 eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# export env variables
+[ -f "$HOME/.zshenv" ] && source "$HOME/.zshenv"
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/louis/.opam/opam-init/init.zsh' ]] || source '/home/louis/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
+
+. "$HOME/.local/bin/env"
