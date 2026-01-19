@@ -70,7 +70,7 @@ zle -N expand-alias
 
 bindkey -M viins " " expand-alias
 
-$(command -v zoxide) && eval "$(zoxide init zsh)"
+[ -f $(command -v zoxide) ] && eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
