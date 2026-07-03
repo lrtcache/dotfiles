@@ -86,3 +86,7 @@ bindkey -M viins " " expand-alias
 # END opam configuration
 
 [ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+
+# >>> Codex installer >>>
+export PATH="/home/louis/.local/bin:$PATH"
+# <<< Codex installer <<<

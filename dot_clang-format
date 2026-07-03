@@ -1,0 +1,43 @@
+---
+IndentWidth: 4
+UseTab: ForIndentation
+TabWidth: 4
+AccessModifierOffset: -4
+ColumnLimit: 90
+
+DerivePointerAlignment: True
+DeriveLineEnding: True
+---
+Language: Cpp
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: false
+  AfterClass: true
+  AfterStruct: true
+  AfterEnum: true
+  AfterNamespace: true
+
+AllowShortIfStatementsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+
+AlignAfterOpenBracket: false
+AlwaysBreakTemplateDeclarations: Yes
+
+PointerAlignment: Left
+ReferenceAlignment: Left
+SpaceBeforeParens: ControlStatements
+SpacesInAngles: false
+SortIncludes: false
+---
+Language: C
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: false
+  AfterClass: false
+  AfterStruct: false
+  AfterEnum: false
+---
